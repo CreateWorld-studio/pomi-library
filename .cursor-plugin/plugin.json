@@ -1,0 +1,9 @@
+{
+  "name": "ziliao",
+  "displayName": "资料库",
+  "version": "1.0.0",
+  "description": "查询本机资料库里的开源项目、AI 新闻和 GitHub 榜单。",
+  "keywords": ["资料库", "新闻", "榜单", "github"],
+  "category": "productivity",
+  "skills": "./skills/"
+}

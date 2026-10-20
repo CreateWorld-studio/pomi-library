@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>资料库</title>
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --ink: #1c1f24;
+      --muted: #5e6774;
+      --line: #d8dee6;
+      --card: #ffffff;
+      --accent: #1f4b99;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      line-height: 1.5;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    header, main { max-width: 880px; margin: 0 auto; }
+    header { padding: 18px 20px 0; }
+    h1 { margin: 0; font-size: 22px; }
+    nav { display: flex; gap: 8px; margin: 14px 0; }
+    button, input, select { font: inherit; color: inherit; }
+    button, .nav {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 8px;
+      padding: 7px 12px;
+      cursor: pointer;
+    }
+    button.primary { background: var(--accent); color: white; border-color: var(--accent); }
+    main { padding: 0 20px 40px; }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .muted { color: var(--muted); }
+    .row { display: flex; gap: 8px; }
+    .row input { flex: 1; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+    .item { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .item:last-child { border-bottom: 0; }
+    #note { min-height: 1.4em; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>资料库</h1>
+    <div id="note"></div>
+    <nav>
+      <a class="nav" href="#/">搜索</a>
+      <a class="nav" href="#/news">新闻</a>
+      <a class="nav" href="#/ranks">榜单</a>
+    </nav>
+  </header>
+  <main id="view"></main>
+  <script>
+    const view = document.querySelector("#view");
+    const note = document.querySelector("#note");
+    let seenVersion = "";
+
+    function el(tag, attrs, children) {
+      const node = document.createElement(tag);
+      Object.entries(attrs || {}).forEach(([key, value]) => {
+        if (key === "class") node.className = value;
+        else node.setAttribute(key, value);
+      });
+      (children || []).forEach((child) => node.append(child && child.nodeType ? child : document.createTextNode(child == null ? "" : String(child))));
+      return node;
+    }
+
+    async function get(path) {
+      const response = await fetch(path);
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "读取失败");
+      return data;
+    }
+
+    function route() {
+      const raw = (location.hash || "#/").slice(1);
+      const mark = raw.indexOf("?");
+      const path = mark === -1 ? raw : raw.slice(0, mark);
+      const query = new URLSearchParams(mark === -1 ? "" : raw.slice(mark + 1));
+      return { path: path || "/", query };
+    }
+
+    function cardLink(id, title) {
+      return el("a", { href: "#/card?id=" + encodeURIComponent(id) }, [title || id]);
+    }
+
+    async function render() {
+      const current = route();
+      view.replaceChildren();
+      try {
+        if (current.path === "/news") return renderNews();
+        if (current.path === "/ranks") return renderRanks(current.query);
+        if (current.path === "/card") return renderCard(current.query.get("id") || "");
+        return renderSearch(current.query.get("q") || "");
+      } catch (error) {
+        view.append(el("div", { class: "panel" }, [error.message]));
+      }
+    }
+
+    function renderSearch(q) {
+      const form = el("form", { class: "panel" });
+      const row = el("div", { class: "row" });
+      const input = el("input", { id: "q", value: q, placeholder: "搜索项目、仓库或摘要" });
+      row.append(input, el("button", { class: "primary", type: "submit" }, ["搜索"]));
+      form.append(row);
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        location.hash = "#/search?q=" + encodeURIComponent(input.value.trim());
+      });
+      view.append(form);
+      if (!q) {
+        view.append(el("p", { class: "muted" }, ["直接输入想找的项目。资料在本机，更新时这一页会留在原地。"]));
+        return;
+      }
+      return get("/local/search?q=" + encodeURIComponent(q) + "&limit=8").then((data) => {
+        const box = el("div", { class: "panel" });
+        if (!data.items.length) box.append(el("p", {}, ["没有匹配的项目"]));
+        data.items.forEach((item) => {
+          const block = el("div", { class: "item" });
+          block.append(cardLink(item.id, item.name_zh || item.name_en || item.id));
+          block.append(el("div", { class: "muted" }, [item.id + " · " + [item.group, item.category, item.subcategory].filter(Boolean).join(" / ")]));
+          block.append(el("div", {}, [item.summary || ""]));
+          box.append(block);
+        });
+        view.append(box);
+      });
+    }
+
+    function renderCard(id) {
+      return get("/local/card?id=" + encodeURIComponent(id)).then((data) => {
+        const item = data.item;
+        const box = el("div", { class: "panel" }, [
+          el("h2", {}, [item.name_zh || item.name_en || item.id]),
+          el("div", { class: "muted" }, [[item.group, item.category, item.subcategory].filter(Boolean).join(" / ")]),
+          el("p", {}, [item.summary || ""]),
+          el("p", {}, [item.description || ""]),
+          el("div", {}, ["星标 " + (item.stars || 0) + (item.language ? " · " + item.language : "")]),
+        ]);
+        if (item.github_url) box.append(el("a", { href: item.github_url, target: "_blank" }, [item.github_url]));
+        view.append(box);
+      }).catch((error) => {
+        view.append(el("div", { class: "panel" }, [error.message]));
+      });
+    }
+
+    function renderNews() {
+      return get("/local/news").then((data) => {
+        const box = el("div", { class: "panel" }, [el("h2", {}, ["最近新闻"])]);
+        if (!data.items.length) box.append(el("p", { class: "muted" }, ["这 7 天还没有新闻"]));
+        data.items.forEach((item) => {
+          const block = el("div", { class: "item" });
+          block.append(el("b", {}, [item.title]));
+          block.append(el("div", { class: "muted" }, [item.date + " · " + (item.kind || "") + " · " + (item.source_name || "")]));
+          block.append(el("div", {}, [item.summary || ""]));
+          box.append(block);
+        });
+        view.append(box);
+      });
+    }
+
+    function renderRanks(query) {
+      const board = query.get("board") || "ai";
+      const period = query.get("period") || "daily";
+      return get("/local/ranks?board=" + encodeURIComponent(board) + "&period=" + encodeURIComponent(period)).then((data) => {
+        const box = el("div", { class: "panel" }, [el("h2", {}, ["榜单"])]);
+        const links = el("div", { class: "row", style: "margin-bottom:10px" });
+        [["ai", "daily", "AI 日榜"], ["ai", "weekly", "AI 周榜"], ["github", "daily", "总榜日榜"]].forEach(([nextBoard, nextPeriod, label]) => {
+          links.append(el("a", { class: "nav", href: "#/ranks?board=" + nextBoard + "&period=" + nextPeriod }, [label]));
+        });
+        box.append(links);
+        data.items.forEach((item, index) => {
+          const block = el("div", { class: "item" });
+          block.append(cardLink(item.id, (index + 1) + ". " + (item.name_zh || item.id)));
+          block.append(el("div", {}, [item.summary || ""]));
+          box.append(block);
+        });
+        view.append(box);
+      });
+    }
+
+    async function tick() {
+      const state = await get("/local/state");
+      note.textContent = state.updating ? "正在后台更新，当前页面可以继续看。" : "";
+      if (state.published_at && state.published_at !== seenVersion) {
+        const first = seenVersion === "";
+        seenVersion = state.published_at;
+        if (!first) note.textContent = "资料已更新";
+        await render();
+      }
+    }
+
+    window.addEventListener("hashchange", () => { render(); });
+    fetch("/local/touch", { method: "POST" }).then(() => tick()).then(() => render());
+    setInterval(tick, 3000);
+  </script>
+</body>
+</html>

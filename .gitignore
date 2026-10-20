@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+public/build/
+public/*.exe
+public/*.zip
+public/*.spec

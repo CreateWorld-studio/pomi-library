@@ -1,0 +1,14 @@
+资料库插件 1.0.0
+
+看项目、新闻和榜单，直接打开 https://www.pomi.me 。不用下载，也不用安装 Python。
+
+Windows 上要把项目下到自己的电脑：下载 ziliao.exe，双击打开。不用安装 Python。
+
+这一份压缩包是给已经在用 Cursor 或 Claude 的人。查询时会用到电脑里的 Python。
+
+Cursor：把本文件夹放到
+%USERPROFILE%\.cursor\plugins\local\ziliao
+Mac 上放到 ~/.cursor/plugins/local/ziliao
+然后重启 Cursor。
+
+Claude：把本文件夹放到 Claude 的用户插件目录，保留里面的 .claude-plugin。
