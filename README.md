@@ -6,7 +6,7 @@ Pomi Library 是一个公开资料库，收录开源项目、AI 新闻和 GitHub
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[Windows 下载](https://github.com/zhaokunzhang6-sudo/pomi-library/releases/download/v1.0.0/pomi-windows.zip) · [macOS 下载](https://github.com/zhaokunzhang6-sudo/pomi-library/releases/download/v1.0.0/pomi-mac.zip) · [网站](https://www.pomi.me)
+[Windows 下载](https://github.com/CreateWorld-studio/pomi-library/releases/download/v1.0.0/pomi-windows.zip) · [macOS 下载](https://github.com/CreateWorld-studio/pomi-library/releases/download/v1.0.0/pomi-mac.zip) · [网站](https://www.pomi.me)
 
 ![项目列表](docs/projects.png)
 
@@ -51,8 +51,8 @@ Pomi Library 是一个公开资料库，收录开源项目、AI 新闻和 GitHub
 ## 插件怎么用
 
 1. 按自己的系统下载压缩包，解压到任意文件夹。
-   - [Windows](https://github.com/zhaokunzhang6-sudo/pomi-library/releases/download/v1.0.0/pomi-windows.zip)
-   - [macOS](https://github.com/zhaokunzhang6-sudo/pomi-library/releases/download/v1.0.0/pomi-mac.zip)
+   - [Windows](https://github.com/CreateWorld-studio/pomi-library/releases/download/v1.0.0/pomi-windows.zip)
+   - [macOS](https://github.com/CreateWorld-studio/pomi-library/releases/download/v1.0.0/pomi-mac.zip)
 2. 复制解压后那个文件夹的完整路径。
 3. 打开 Codex、Claude Code、Cursor 或 Workbuddy，新开一个对话。
 4. 把路径贴进去，让它把这个插件安装到当前软件。
@@ -89,7 +89,7 @@ Pomi Library is a public library of open-source projects, AI news, and GitHub ra
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[Download for Windows](https://github.com/zhaokunzhang6-sudo/pomi-library/releases/download/v1.0.0/pomi-windows.zip) · [Download for macOS](https://github.com/zhaokunzhang6-sudo/pomi-library/releases/download/v1.0.0/pomi-mac.zip) · [Website](https://www.pomi.me)
+[Download for Windows](https://github.com/CreateWorld-studio/pomi-library/releases/download/v1.0.0/pomi-windows.zip) · [Download for macOS](https://github.com/CreateWorld-studio/pomi-library/releases/download/v1.0.0/pomi-mac.zip) · [Website](https://www.pomi.me)
 
 ### Using the website
 
@@ -126,8 +126,8 @@ Sort by stars or by time. The search box matches Chinese names, English names, c
 ### Using the plugin
 
 1. Download the archive for your system and unzip it anywhere.
-   - [Windows](https://github.com/zhaokunzhang6-sudo/pomi-library/releases/download/v1.0.0/pomi-windows.zip)
-   - [macOS](https://github.com/zhaokunzhang6-sudo/pomi-library/releases/download/v1.0.0/pomi-mac.zip)
+   - [Windows](https://github.com/CreateWorld-studio/pomi-library/releases/download/v1.0.0/pomi-windows.zip)
+   - [macOS](https://github.com/CreateWorld-studio/pomi-library/releases/download/v1.0.0/pomi-mac.zip)
 2. Copy the full path of the unzipped folder.
 3. Open Codex, Claude Code, Cursor, or Workbuddy and start a new chat.
 4. Paste the path and ask it to install this plugin into that app.
