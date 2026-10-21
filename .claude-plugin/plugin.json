@@ -1,5 +1,5 @@
 {
   "name": "ziliao",
-  "description": "查询本机资料库里的开源项目、AI 新闻和 GitHub 榜单。",
+  "description": "给刚接触 AI、还不熟 GitHub 的人查开源项目、AI 新闻和榜单。",
   "version": "1.0.0"
 }

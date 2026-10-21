@@ -2,7 +2,7 @@
 
 中文 | [English](#english)
 
-Pomi Library 是一个公开资料库，收录开源项目、AI 新闻和 GitHub 榜单。网站在 [pomi.me](https://www.pomi.me)。这个仓库是它的插件：装进 Codex、Claude Code、Cursor 或 Workbuddy 之后，助手可以在本机查询这些资料。
+Pomi Library 是一个公开资料库，收录开源项目、AI 新闻和 GitHub 榜单，网站在 [pomi.me](https://www.pomi.me)。它主要给刚开始用 AI、还不熟代码和 GitHub 的人：搜索、看懂和操作仓库都有门槛，这里用中文分类、摘要和配图把项目摊开，按用途就能找。作者的项目被收录后，也会多一次出现在这些读者面前的机会。这个仓库是它的插件：装进 Codex、Claude Code、Cursor 或 Workbuddy 之后，助手可以在本机查询这些资料。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -85,7 +85,7 @@ python skills/ziliao/ziliao.py ranks --board ai --period daily --limit 10
 
 ## English
 
-Pomi Library is a public library of open-source projects, AI news, and GitHub rankings. The site is [pomi.me](https://www.pomi.me). This repository is the plugin: once it is installed in Codex, Claude Code, Cursor, or Workbuddy, the agent can query that library on your machine.
+Pomi Library is a public library of open-source projects, AI news, and GitHub rankings. The site is [pomi.me](https://www.pomi.me). It is for people who are new to AI and do not yet know their way around code or GitHub. Searching, reading, and using a repository still takes know-how; the library flattens that with Chinese categories, short summaries, and images, so you can look things up by what you want to do. Projects that are included also get another chance to be seen by those readers. This repository is the plugin: once it is installed in Codex, Claude Code, Cursor, or Workbuddy, the agent can query that library on your machine.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
